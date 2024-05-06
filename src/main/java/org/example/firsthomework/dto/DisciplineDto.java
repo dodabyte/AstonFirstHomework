@@ -3,7 +3,7 @@ package org.example.firsthomework.dto;
 import lombok.*;
 import org.example.firsthomework.dto.global.DataTransferObject;
 
-public enum DisciplineDto implements DataTransferObject {;
+public enum DisciplineDto implements DataTransferObject {; // ты сильно перемудрил с ДТО, это тут лишнее. И с интерфейсами тоже
     private interface Id { long getId(); }
     private interface Name { String getName(); }
     private interface TeacherRequest { TeacherDto.Request getTeacher(); }

@@ -7,8 +7,8 @@ import org.example.firsthomework.exception.DataAccessObjectException;
 import java.sql.*;
 
 public class SemesterPerformanceDao extends DataAccesObject<SemesterPerformance> {
-    private final String INSERT = "INSERT INTO semester_performance (student_id, discipline_id, mark) VALUES ((?), (?), (?))";
-    private final String UPDATE = "UPDATE semester_performance set student_id = (?), discipline_id = (?), mark = (?) where id = (?)";
+    private final static String INSERT = "INSERT INTO semester_performance (student_id, discipline_id, mark) VALUES ((?), (?), (?))";
+    private final static String UPDATE = "UPDATE semester_performance set student_id = (?), discipline_id = (?), mark = (?) where id = (?)";
 
     private final StudentDao studentDao = StudentDao.getInstance();
     private final DisciplineDao disciplineDao = DisciplineDao.getInstance();
@@ -37,7 +37,7 @@ public class SemesterPerformanceDao extends DataAccesObject<SemesterPerformance>
 
         try (Connection connection = sessionManager.getSession();
              PreparedStatement statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
-            if (entity.getStudent() == null) statement.setNull(1, Types.NULL);
+            if (entity.getStudent() == null) statement.setNull(1, Types.NULL); // не забывай про {} - это улучшает читаемость
             else statement.setLong(1, entity.getStudent().getId());
 
             if (entity.getDiscipline() == null) statement.setNull(2, Types.NULL);

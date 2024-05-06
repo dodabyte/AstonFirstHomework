@@ -38,7 +38,7 @@ public class GroupServlet extends HttpServlet {
         String responseBody;
         try {
             String[] pathPart = request.getPathInfo().split("/");
-            if (pathPart.length > 1 && pathPart[1].equals("all")) {
+            if (pathPart.length > 1 && "all".equals(pathPart[1])) { // чтобы не было NPE
                 List<GroupDto.Response> groupResponseDtoList = groupService.findAll();
                 responseBody = objectMapper.writeValueAsString(groupResponseDtoList);
             }

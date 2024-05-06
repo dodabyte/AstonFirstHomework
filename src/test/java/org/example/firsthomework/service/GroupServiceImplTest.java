@@ -87,7 +87,7 @@ class GroupServiceImplTest {
         Mockito.verify(mockGroupDao).insert(argumentCaptor.capture());
 
         Group result = argumentCaptor.getValue();
-        Assertions.assertEquals(expectedName, result.getName());
+        Assertions.assertEquals(expectedName, result.getName()); // несколько ассертов нужно кидать в asserAll
         Assertions.assertEquals(expectedCourse, result.getCourse());
         Assertions.assertEquals(expectedSemester, result.getSemester());
     }

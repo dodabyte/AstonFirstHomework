@@ -118,17 +118,8 @@ public class StudentServlet extends HttpServlet {
             }
             response.getWriter().println(responseBody);
         }
-        catch (JsonException e) {
-            log.error(e.getMessage(), e);
-            response.sendError(406, "Student Json Invalid");
-        }
-        catch (EntityNotFoundException e) {
-            log.error(e.getMessage(), e);
-            response.sendError(404, "Student Not Found");
-        }
         catch (Exception e) {
-            log.error(e.getMessage(), e);
-            response.sendError(400, "Bad request");
+            handleError(e,response);
         }
     }
 
@@ -151,17 +142,29 @@ public class StudentServlet extends HttpServlet {
             }
             response.getWriter().println(responseBody);
         }
-        catch (EntityNotFoundException e) {
-            log.error(e.getMessage(), e);
-            response.sendError(404, "Student Not Found");
-        }
-        catch (DataAccessObjectException e) {
-            log.error(e.getMessage(), e);
-            response.sendError(500, "Server Error");
-        }
         catch (Exception e) {
-            log.error(e.getMessage(), e);
-            response.sendError(400, "Bad request");
+            handleError(e, response);
+        }
+    }
+
+    private void handleError(Exception e, HttpServletResponse response) {
+        log.error(e.getMessage(), e);
+        if (e instanceof EntityNotFoundException) {
+            sendError(response, 404, "Student Not Found");
+        } else if (e instanceof DataAccessObjectException) {
+            sendError(response, 500, "Server Error");
+        } else if (e instanceof JsonException) {
+            sendError(response, 406, "Student Json Invalid");
+        } else {
+            sendError(response, 400, "Bad request");
+        }
+    }
+
+    private void sendError(HttpServletResponse response, Integer status, String message) {
+        try {
+            response.sendError(status, message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

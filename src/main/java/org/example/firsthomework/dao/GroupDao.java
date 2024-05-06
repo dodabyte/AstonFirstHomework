@@ -9,8 +9,8 @@ import java.util.List;
 
 
 public class GroupDao extends DataAccesObject<Group> {
-    private final String INSERT = "INSERT INTO groups (name, course, semester) VALUES ((?), (?), (?))";
-    private final String UPDATE = "UPDATE groups set name = (?), course = (?), semester = (?) where id = (?)";
+    private final static String INSERT = "INSERT INTO groups (name, course, semester) VALUES ((?), (?), (?))";
+    private final static String UPDATE = "UPDATE groups set name = (?), course = (?), semester = (?) where id = (?)";
 
     private static GroupDao instance;
 
